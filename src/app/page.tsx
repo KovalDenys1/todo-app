@@ -1,61 +1,53 @@
 'use client';
 
 import { useState } from 'react';
+import Header from './elements/Header';
+import TaskInputForm from './elements/TaskInputForm';
+import TaskColumn from './elements/TaskColumn';
+import { Task } from './elements/Types';
 
 export default function Home() {
-  const [task, setTask] = useState('');
-  const [tasksArray, setTasksArray] = useState<string[]>([]);
+  const [tasksArray, setTasksArray] = useState<Task[]>([]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTask(e.target.value);
+  const handleAddTask = (text: string, category: 'Home' | 'Work' | 'School') => {
+    setTasksArray([...tasksArray, { text, category }]);
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (task.trim()) {
-      setTasksArray([...tasksArray, task]);
-      setTask('');
-    }
-  };
-
-  const handleDelete = (index: number) => {
+  const handleDeleteTask = (index: number) => {
     setTasksArray(tasksArray.filter((_, i) => i !== index));
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-8">
-      <h1 className="text-5xl font-bold mb-6 text-black">To-Do App</h1>
-      <form onSubmit={handleFormSubmit} className="flex gap-4 mb-6">
-        <input
-          type="text"
-          value={task}
-          onChange={handleInputChange}
-          placeholder="Enter a task"
-          className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+      {/* Хэддер */}
+      <Header />
+
+      {/* Форма добавления задачи */}
+      <TaskInputForm onAddTask={handleAddTask} />
+
+      {/* Список задач по категориям */}
+      <div className="flex gap-8 w-full max-w-screen-lg">
+        {/* Колонка "Дом" */}
+        <TaskColumn
+          title="Home"
+          tasks={tasksArray.filter((task) => task.category === 'Home')}
+          onDeleteTask={handleDeleteTask}
         />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Add Task
-        </button>
-      </form>
-      <ul className="w-full max-w-md">
-        {tasksArray.map((task, index) => (
-          <li
-            key={index}
-            className="flex justify-between items-center p-2 bg-white rounded shadow mb-2 text-black"
-          >
-            {task}
-            <button
-              onClick={() => handleDelete(index)}
-              className="text-red-500 hover:text-red-700"
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+
+        {/* Колонка "Работа" */}
+        <TaskColumn
+          title="Work"
+          tasks={tasksArray.filter((task) => task.category === 'Work')}
+          onDeleteTask={handleDeleteTask}
+        />
+
+        {/* Колонка "Учёба" */}
+        <TaskColumn
+          title="School"
+          tasks={tasksArray.filter((task) => task.category === 'School')}
+          onDeleteTask={handleDeleteTask}
+        />
+      </div>
     </div>
   );
 }
