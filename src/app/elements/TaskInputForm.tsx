@@ -27,16 +27,17 @@ export default function TaskInputForm({ onAddTask }: TaskInputFormProps) {
   return (
     <form onSubmit={handleFormSubmit} className="flex gap-4 mb-6">
       <input
-        type="text"
-        value={task}
-        onChange={handleInputChange}
-        placeholder="Enter task"
-        className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
-      />
+  type="text"
+  value={task}
+  onChange={handleInputChange}
+  placeholder="Enter task"
+  className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-300 text-black"
+/>
+
       <select
         value={category}
         onChange={handleCategoryChange}
-        className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+        className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-300 text-black"
       >
         <option value="Home">Home</option>
         <option value="Work">Work</option>

@@ -1,7 +1,8 @@
 export default function Header() {
     return (
-      <header className="text-5xl font-bold mb-6 text-black">
-        To-Do App
+      <header>
+        <p className="text-5xl font-bold text-black">To-Do App</p> 
+        <p className="text-2xl mb-6 text-black">made by Denys</p>
       </header>
     );
   }  
